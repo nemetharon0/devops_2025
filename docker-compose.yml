@@ -1,0 +1,10 @@
+services:
+  web-app:
+    build: .
+
+    networks:
+      - nginx-proxy-network
+
+networks:
+  nginx-proxy-network:
+    external: true
