@@ -1,15 +1,17 @@
 services:
   backend:
-    image: nemetharon0/devops-backend:latest
+    image: nemetharon0/devops-backend:main
     container_name: backend
     restart: unless-stopped
+    env_file: .env
     networks:
       - nginx-proxy-network
 
   web-app:
-    image: nemetharon0/devops-frontend:latest
+    image: nemetharon0/devops-frontend:main
     container_name: frontend
     restart: unless-stopped
+    env_file: .env
     networks:
       - nginx-proxy-network
     depends_on:
