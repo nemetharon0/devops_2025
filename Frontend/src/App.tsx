@@ -35,7 +35,7 @@ function App() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center gap-6 p-4">
-      <h1 className="text-3xl font-bold">Weather & Outfit Suggester</h1>
+      <h1 className="text-3xl font-bold">WEATHER & Outfit Suggester</h1>
 
       <form onSubmit={handleSubmit} className="flex gap-2">
         <input
