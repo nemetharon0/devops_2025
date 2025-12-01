@@ -1,12 +1,16 @@
-# STEP 1: build
-FROM node:alpine AS builder
+# Step 1: build
+FROM node:lts-alpine AS builder
 WORKDIR /app
-COPY package.json .
+
+COPY package*.json  ./
+
 RUN npm install
+
 COPY . .
+
 RUN npm run build
 
-# STEP 2: host
+# Step 2: host
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf

@@ -1,9 +1,19 @@
 services:
-  web-app:
-    build: .
-
+  backend:
+    image: nemetharon0/devops-backend:latest
+    container_name: backend
+    restart: unless-stopped
     networks:
       - nginx-proxy-network
+
+  web-app:
+    image: nemetharon0/devops-frontend:latest
+    container_name: frontend
+    restart: unless-stopped
+    networks:
+      - nginx-proxy-network
+    depends_on:
+      - backend
 
 networks:
   nginx-proxy-network:
