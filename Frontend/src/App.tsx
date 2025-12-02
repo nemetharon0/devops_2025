@@ -5,6 +5,17 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
 const WIKI_SUMMARY_BASE =
   "https://en.wikipedia.org/api/rest_v1/page/summary/";
 
+const OUTFIT_IMAGES: Record<string, string> = {
+  heavy_jacket_and_boots: "/outfits/heavy_jacket_and_boots.png",
+  raincoat_and_warm_clothes: "/outfits/raincoat_and_warm_clothes.png",
+  light_rain_jacket: "/outfits/light_rain_jacket.png",
+  heavy_jacket_scarf_hat: "/outfits/heavy_jacket_scarf_hat.png",
+  coat_and_sweater: "/outfits/coat_and_sweater.png",
+  light_jacket: "/outfits/light_jacket.png",
+  tshirt_and_jeans: "/outfits/tshirt_and_jeans.png",
+  tshirt_and_shorts: "/outfits/tshirt_and_shorts.png"
+};
+
 function App() {
   const [city, setCity] = useState<string>(
     import.meta.env.VITE_DEFAULT_CITY || "Budapest"
@@ -112,6 +123,18 @@ function App() {
               Suggested outfit:{" "}
               <span className="font-mono">{data.outfit}</span>
             </p>
+            {data.outfit && OUTFIT_IMAGES[data.outfit] && (
+              <div className="mt-4">
+                <img
+                  src={OUTFIT_IMAGES[data.outfit]}
+                  alt={data.outfit}
+                  className="w-full max-h-64 object-cover rounded-lg shadow-lg border border-white/10"
+                />
+                <p className="mt-1 text-sm text-slate-200 text-center">
+                  Outfit preview
+                </p>
+              </div>
+            )}
           </section>
         )}
       </main>
