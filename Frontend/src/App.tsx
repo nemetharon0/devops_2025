@@ -16,6 +16,17 @@ const OUTFIT_IMAGES: Record<string, string> = {
   tshirt_and_shorts: "/outfits/tshirt_and_shorts.png"
 };
 
+const OUTFIT_LABELS: Record<string, string> = {
+  heavy_jacket_and_boots: "Heavy jacket & boots",
+  raincoat_and_warm_clothes: "Raincoat & warm clothes",
+  light_rain_jacket: "Light rain jacket",
+  heavy_jacket_scarf_hat: "Heavy jacket, scarf & hat",
+  coat_and_sweater: "Coat & sweater",
+  light_jacket: "Light jacket",
+  tshirt_and_jeans: "T-shirt & jeans",
+  tshirt_and_shorts: "T-shirt & shorts"
+};
+
 function App() {
   const [city, setCity] = useState<string>(
     import.meta.env.VITE_DEFAULT_CITY || "Budapest"
@@ -117,11 +128,18 @@ function App() {
                 <span className="text-sm text-slate-200">({data.country})</span>
               )}
             </h2>
-            <p>Temperature: {data.tempCelsius} °C</p>
-            <p>Condition: {data.condition}</p>
+            <div className="inline-flex items-center gap-2 mb-3">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/60 text-white font-semibold backdrop-blur border border-white/20 shadow-sm">
+                <span className="inline-block h-2 w-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden />
+                {data.tempCelsius} °C
+              </span>
+              <span className="text-sm text-slate-100">{data.condition}</span>
+            </div>
             <p className="mt-2 font-semibold">
               Suggested outfit:{" "}
-              <span className="font-mono">{data.outfit}</span>
+              <span className="font-mono">
+                {OUTFIT_LABELS[data.outfit] || data.outfit}
+              </span>
             </p>
             {data.outfit && OUTFIT_IMAGES[data.outfit] && (
               <div className="mt-4">

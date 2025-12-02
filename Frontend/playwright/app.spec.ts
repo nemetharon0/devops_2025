@@ -15,6 +15,16 @@ test("shows weather and outfit suggestion", async ({ page }) => {
     });
   });
 
+  await page.route("**wikipedia.org/api/rest_v1/page/summary/**", async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        originalimage: { source: "https://example.com/city.jpg" }
+      })
+    });
+  });
+
   await page.goto("/");
 
   const input = page.getByPlaceholder(/enter city/i);
@@ -22,6 +32,6 @@ test("shows weather and outfit suggestion", async ({ page }) => {
   await page.getByRole("button", { name: /check/i }).click();
 
   await expect(page.getByText("Berlin")).toBeVisible();
-  await expect(page.getByText(/Temperature:/)).toContainText("15");
-  await expect(page.getByText(/Suggested outfit:/)).toContainText("light_jacket");
+  await expect(page.getByText(/°C/)).toContainText("15");
+  await expect(page.getByText(/Suggested outfit:/)).toContainText("Light jacket");
 });

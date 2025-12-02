@@ -21,7 +21,7 @@ describe("App", () => {
       outfit: "light_jacket"
     };
 
-    vi.spyOn(global, "fetch").mockResolvedValue({
+    vi.spyOn(globalThis, "fetch").mockResolvedValue({
       ok: true,
       json: async () => mockData
     } as unknown as Response);
@@ -35,14 +35,14 @@ describe("App", () => {
     await user.click(screen.getByRole("button", { name: /check/i }));
 
     expect(await screen.findByText(/Berlin/)).toBeInTheDocument();
-    expect(screen.getByText(/Temperature:/)).toHaveTextContent("15 °C");
+    expect(screen.getByText(/15 °C/)).toBeInTheDocument();
     expect(screen.getByText(/Suggested outfit:/)).toHaveTextContent(
-      "light_jacket"
+      "Light jacket"
     );
   });
 
   it("shows error on failed fetch", async () => {
-    vi.spyOn(global, "fetch").mockResolvedValue({
+    vi.spyOn(globalThis, "fetch").mockResolvedValue({
       ok: false,
       status: 404,
       json: async () => ({ error: "City not found" })
