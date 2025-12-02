@@ -35,6 +35,7 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<WeatherResponse | null>(null);
   const [bgUrl, setBgUrl] = useState<string | null>(null);
+  const [lightboxUrl, setLightboxUrl] = useState<string | null>(null);
 
   const fetchWikiImage = async (cityName: string) => {
     try {
@@ -146,7 +147,8 @@ function App() {
                 <img
                   src={OUTFIT_IMAGES[data.outfit]}
                   alt={data.outfit}
-                  className="w-full max-h-64 object-cover rounded-lg shadow-lg border border-white/10"
+                  className="w-full max-h-64 object-cover rounded-lg shadow-lg border border-white/10 cursor-pointer"
+                  onClick={() => setLightboxUrl(OUTFIT_IMAGES[data.outfit])}
                 />
                 <p className="mt-1 text-sm text-slate-200 text-center">
                   Outfit preview
@@ -156,6 +158,31 @@ function App() {
           </section>
         )}
       </main>
+
+      {lightboxUrl && (
+        <div
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setLightboxUrl(null)}
+        >
+          <div
+            className="relative max-w-5xl w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="absolute top-2 right-2 bg-black/60 text-white px-3 py-1 rounded-full text-sm hover:bg-black/80 transition"
+              onClick={() => setLightboxUrl(null)}
+            >
+              Close
+            </button>
+            <img
+              src={lightboxUrl}
+              alt="Outfit enlarged"
+              className="w-full rounded-xl shadow-2xl border border-white/10 object-contain max-h-[80vh]"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
